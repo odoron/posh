@@ -67,11 +67,16 @@ if ($OSEmulation -eq $false)
                                                       $OperatingSystem = "Windows 8.1"
                                                       $OSBuild = $OS.BuildNumber
                                                       }
-												elseif ($OS.BuildNumber -eq 10586)
-                                                	{
-                                                	$OperatingSystem = "Windows 10"
-                                                	$OSBuild = $OS.BuildNumber
-                                                	}
+						      elseif (($OS.BuildNumber -eq 10586) -or ($OS.BuildNumber -eq 19045))
+							    {
+							    $OperatingSystem = "Windows 10"
+							    $OSBuild = $OS.BuildNumber
+							    }
+							    elseif ($OS.BuildNumber -eq 22621)
+                                                	          {
+                                                	          $OperatingSystem = "Windows 11"
+                                                	          $OSBuild = $OS.BuildNumber
+                                                	          }	   
                   }
             [2-3]{
                   #Member server.
@@ -101,6 +106,21 @@ if ($OSEmulation -eq $false)
                                                 $OperatingSystem = "Windows Server 2012 R2"
                                                 $OSBuild = $OS.BuildNumber
                                                 }
+                                                elseif ($OS.BuildNumber -eq 14393)
+                                                  {
+                                                  $OperatingSystem = "Windows Server 2016"
+                                                  $OSBuild = $OS.BuildNumber
+                                                  }
+                                                  elseif ($OS.BuildNumber -eq 17763)
+                                                      {
+                                                      $OperatingSystem = "Windows Server 2019"
+                                                      $OSBuild = $OS.BuildNumber
+                                                      }
+                                                      elseif ($OS.BuildNumber -eq 20348)
+                                                          {
+                                                          $OperatingSystem = "Windows Server 2022"
+                                                          $OSBuild = $OS.BuildNumber
+                                                          }
                   }
             [4-5]{
                   #Domain Controller
@@ -129,6 +149,21 @@ if ($OSEmulation -eq $false)
                                           $OperatingSystem = "Windows Server 2012 R2"
                                           $OSBuild = $OS.BuildNumber
                                           }
+                                                elseif ($OS.BuildNumber -eq 14393)
+                                                  {
+                                                  $OperatingSystem = "Windows Server 2016"
+                                                  $OSBuild = $OS.BuildNumber
+                                                  }
+                                                  elseif ($OS.BuildNumber -eq 17763)
+                                                      {
+                                                      $OperatingSystem = "Windows Server 2019"
+                                                      $OSBuild = $OS.BuildNumber
+                                                      }
+                                                      elseif ($OS.BuildNumber -eq 20348)
+                                                          {
+                                                          $OperatingSystem = "Windows Server 2022"
+                                                          $OSBuild = $OS.BuildNumber
+                                                          }
                   }
             }
       }
@@ -334,9 +369,9 @@ foreach ($Principal in $Principals)
       $MaxTokenSizeValue = $KerbKey.GetValue('MaxTokenSize')
 	  if ($MaxTokenSizeValue -eq $null)
 	  	{
-		if ($OSBuild -lt 9200)
+		if ([int]$OSBuild -lt 9200)
 			{$MaxTokenSizeValue = 12000}
-		if ($OSBuild -ge 9200)
+		if ([int]$OSBuild -ge 9200)
 			{$MaxTokenSizeValue = 48000}
 		}
         Write-Host "Effective MaxTokenSize value is: $Maxtokensizevalue"
